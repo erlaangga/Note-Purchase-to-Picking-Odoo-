@@ -5,9 +5,11 @@ from openerp import models,fields, api
 class Purchase(models.Model):
     _inherit = "purchase.order"
     
-    _columns = {
-                "catatan_gudang":fields7.Text("Catatan Untuk Gudang")
-                }
+#     _columns = {
+#                 "catatan_gudang":fields7.text("Catatan untuk orang gudang")
+#                 }
+    
+    catatan_gudang = fields.Text("Catatan untuk orang gudang")
     
 #     def button_confirm(self, cr, uid, ids, context):
 #         super(Purchase, self).button_confirm(cr,uid,ids,context)
@@ -15,8 +17,8 @@ class Purchase(models.Model):
 #         obj_picking = self.pool.get("stock.picking")
 #         stock_pickings = obj_picking.search(cr,uid,[("purchase_id","=", ids[0])])
 #         for picking in obj_picking.browse(cr,uid,stock_pickings):
-#             picking.note = self.browse(cr,uid,ids).notes
-      
+#             picking.note = self.browse(cr,uid,ids).catatan_gudang
+       
     @api.multi
     def button_confirm(self):
         super(Purchase, self).button_confirm()
@@ -24,5 +26,5 @@ class Purchase(models.Model):
         obj_picking = self.env["stock.picking"]
         stock_pickings = obj_picking.search([("purchase_id","=",self.id)])
         for picking in stock_pickings:
-            picking.note = self.notes
+            picking.note = self.catatan_gudang
          
